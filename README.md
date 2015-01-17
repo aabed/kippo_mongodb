@@ -13,7 +13,7 @@ Mongodb support for Kippo honeypot
 
 * add those lines to the end of the **kippo.cfg** file
 
-> [database___mongodb]
+> [database_mongodb]
 <br>server = 127.0.0.1
 <br>port = 27017
 <br>username = kippo
