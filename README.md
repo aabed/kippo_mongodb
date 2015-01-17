@@ -11,6 +11,16 @@ Mongodb support for Kippo honeypot
 
 * copy the file **mongodb.py** to **< kippo-dir >/kippo/dblog** and you should be seeing kippo logging to mongodb
 
+* add those lines to the end of the **kippo.cfg** file
+
+> [database___mongodb]
+<br>server = 127.0.0.1
+<br>port = 27017
+<br>username = kippo
+<br>password = kippo_pass
+<br>database = kippo
+<br>collection = log 
+
 * get the logs from mongodb using mongoshell
 
  `use kippo`
