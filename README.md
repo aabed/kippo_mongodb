@@ -2,7 +2,7 @@
 Mongodb support for Kippo honeypot
 
 ##Usage
-* Run the script create.js to create the database,database user and collection
+* Uncomment the lines in create.js and run it to create the database,database user and collection
 
  `mongo create.js`
 
