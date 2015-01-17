@@ -16,3 +16,8 @@ Mongodb support for Kippo honeypot
  `use kippo`
 
  `db.log.find()`
+
+##Inspired by and based on
+* [Hpfeeds] 
+[Hpfeeds]:https://github.com/rep/hpfeeds/blob/master/appsupport/kippo/hpfeeds.py
+
