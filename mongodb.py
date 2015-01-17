@@ -1,12 +1,6 @@
 from kippo.core import dblog
 from twisted.python import log
-from pymongo import *
-import gridfs
-import os
-import struct
-import hashlib
-import json
-import socket
+from pymongo import MongoClient
 import uuid
 
 
@@ -20,9 +14,12 @@ class DBLogger(dblog.DBLogger):
 		password	= cfg.get('database_mongodb', 'password')
 		database	= cfg.get('database_mongodb', 'database')
 		collection	= cfg.get('database_mongodb', 'collection')
+		#database = "mnemosyne"
+		#coll = "hpfeed"
+		#server = "127.0.0.1"
+		#log.msg(server)
 		client = MongoClient("mongodb://{0}:{1}@{2}:{3}/{4}".format(username,password,server,int(port),database))
 		db=client.get_default_database()
-		self.fs=gridfs.GridFS(db)
 		self.collection = db[collection]
 		self.meta = {}
 
