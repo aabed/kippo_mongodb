@@ -1,6 +1,7 @@
 from kippo.core import dblog
 from twisted.python import log
 from pymongo import MongoClient
+from datetime import datetime
 import uuid
 
 
@@ -22,15 +23,18 @@ class DBLogger(dblog.DBLogger):
 	# We have to return an unique ID
 	def createSession(self, peerIP, peerPort, hostIP, hostPort):
 		session = uuid.uuid4().hex
-		self.meta[session] = {'session':session,'peerIP': peerIP, 'peerPort': peerPort, 
+		startTime=datetime.now().isoformat()
+		self.meta[session] = {'session':session,'startTime':startTime,'endTime':'','peerIP': peerIP, 'peerPort': peerPort, 
 		'hostIP': hostIP, 'hostPort': hostPort, 'loggedin': None,
 		'credentials':[], 'commands':[],"unknownCommands":[],'urls':[],'version': None, 'ttylog': None }
+
 		return session
 
 	def handleConnectionLost(self, session, args):
 		log.msg('publishing metadata to mongodb')
 		meta = self.meta[session]
 		ttylog = self.ttylog(session)
+		self.meta[session]['endTime']=datetime.now().isoformat()
 		if ttylog: meta['ttylog'] = ttylog.encode('hex')
     		self.collection.insert(meta)
 
@@ -40,6 +44,7 @@ class DBLogger(dblog.DBLogger):
 
 	def handleLoginSucceeded(self, session, args):
 		u, p = args['username'], args['password']
+		self.meta[session]['startTime']=datetime.now().isoformat()
 		self.meta[session]['loggedin'] = (u,p)
 
 	def handleCommand(self, session, args):
